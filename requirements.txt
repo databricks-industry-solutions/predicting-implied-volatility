@@ -1,0 +1,2 @@
+tensorflow==2.9.0
+tf_quant_finance
