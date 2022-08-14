@@ -41,3 +41,4 @@ ___
 |----------------------------------------|-------------------------|------------|-----------------------------------------------------|
 | PyYAML                                 | Reading Yaml files      | MIT        | https://github.com/yaml/pyyaml                      |
 | Tensorflow                             | Machine Learning        | Apache 2.0 | https://github.com/tensorflow/tensorflow            |
+| TF Quant Finance                       | Machine Learning        | Apache 2.0 | https://github.com/google/tf-quant-finance          |
