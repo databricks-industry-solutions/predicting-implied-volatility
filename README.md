@@ -6,9 +6,9 @@
 
 ## A day in the life of a Quantitative Researcher
 
-*In this solution we will reproduce the most common tasks quantitative researchers perform - 1. developing new quantitative models like asset allocation or novel risk-adjusted performance metrics (to account for non-standard risk) using academic papers and 2. designing experiments to test these models.
+In this solution we will reproduce the most common tasks quantitative researchers perform - 1. developing new quantitative models like asset allocation or novel risk-adjusted performance metrics (to account for non-standard risk) using academic papers and 2. designing experiments to test these models.
 
-We will implement the logic of the following academic paper (Deep Learning Volatility, 2019, Horvath et al), build the proposed model, and productionalize everything using various Databricks services (see the Architecture at the end of this notebook).*
+We will implement the logic of the following academic paper (Deep Learning Volatility, 2019, Horvath et al), build the proposed model, and productionalize everything using various Databricks services (see the Architecture at the end of this notebook).
 
 ___
 <boris.banushev@databricks.com>
@@ -25,5 +25,4 @@ ___
 | library                                | description             | license    | source                                              |
 |----------------------------------------|-------------------------|------------|-----------------------------------------------------|
 | PyYAML                                 | Reading Yaml files      | MIT        | https://github.com/yaml/pyyaml                      |
-|----------------------------------------|-------------------------|------------|-----------------------------------------------------|
 | Tensorflow                             | Machine Learning        | Apache 2.0 | https://github.com/tensorflow/tensorflow            |
