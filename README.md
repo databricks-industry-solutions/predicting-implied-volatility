@@ -4,17 +4,17 @@
 [![CLOUD](https://img.shields.io/badge/CLOUD-ALL-blue?logo=googlecloud&style=for-the-badge)](https://cloud.google.com/databricks)
 [![POC](https://img.shields.io/badge/POC-10_days-green?style=for-the-badge)](https://databricks.com/try-databricks)
 
-## A day in the life of a Quantitative Researcher
+# A day in the life of a Quantitative Researcher
 
 In this solution we will reproduce the most common tasks quantitative researchers perform, namely 1. developing new quantitative models like asset allocation or novel risk-adjusted performance metrics (to account for non-standard risk) using academic papers and 2. designing experiments to test these models.
 
-We will implement the logic of the following academic paper (Deep Learning Volatility, 2019, Horvath et al), build the proposed model, and productionalize everything using various Databricks services (see the Architecture at the end of this notebook).
+We will implement the logic of the following academic paper (_Deep Learning Volatility_, 2019, Horvath et al), build the proposed model, and productionalize everything using various Databricks services (see the Architecture at the end of this notebook).
 
 The aim of the paper is the build a neural networks that is an off-line approximation of complex pricing functions, which are difficult to represent or time-consuming to evaluate by other means. In turn this solves the calibration bottleneck posed by a slow pricing of derivative contracts.
 
 Link to the paper - https://arxiv.org/pdf/1901.09647.pdf
 
-# Why Databricks Lakehouse for "Deep Learning Volatility"?
+## Why Databricks Lakehouse for "Deep Learning Volatility"?
 
 1. **Scale**: The burst capacity of [Databricks Runtime](https://docs.databricks.com/runtime/mlruntime.html) and [Photon](https://www.databricks.com/product/photon) can run this very computationally intensive synthetic data generation algorithm (from the paper) extremely quickly and in a cost-efficient way.
 2. **DataOps - Feature Store**: [Databricks Feature Store](https://databricks.com/blog/2022/04/29/announcing-general-availability-of-databricks-feature-store.html) can keep these generated features in a highly efficient format (as Delta tables) making them ready for online and offline training, eliminating the need to re-run these algorithms many times and avoid additional costs.
