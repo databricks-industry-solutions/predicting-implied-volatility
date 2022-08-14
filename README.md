@@ -4,7 +4,7 @@
 [![CLOUD](https://img.shields.io/badge/CLOUD-ALL-blue?logo=googlecloud&style=for-the-badge)](https://cloud.google.com/databricks)
 [![POC](https://img.shields.io/badge/POC-10_days-green?style=for-the-badge)](https://databricks.com/try-databricks)
 
-## A day in the life of a Quantitative Researcher**
+## A day in the life of a Quantitative Researcher
 
 *In this solution we will reproduce the most common tasks quantitative researchers perform - 1. developing new quantitative models like asset allocation or novel risk-adjusted performance metrics (to account for non-standard risk) using academic papers and 2. designing experiments to test these models.
 
@@ -25,4 +25,5 @@ ___
 | library                                | description             | license    | source                                              |
 |----------------------------------------|-------------------------|------------|-----------------------------------------------------|
 | PyYAML                                 | Reading Yaml files      | MIT        | https://github.com/yaml/pyyaml                      |
-
+|----------------------------------------|-------------------------|------------|-----------------------------------------------------|
+| Tensorflow                             | Machine Learning        | Apache 2.0 | https://github.com/tensorflow/tensorflow            |
