@@ -4,15 +4,19 @@
 [![CLOUD](https://img.shields.io/badge/CLOUD-ALL-blue?logo=googlecloud&style=for-the-badge)](https://cloud.google.com/databricks)
 [![POC](https://img.shields.io/badge/POC-10_days-green?style=for-the-badge)](https://databricks.com/try-databricks)
 
-*Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.*
+## A day in the life of a Quantitative Researcher**
+
+*In this solution we will reproduce the most common tasks quantitative researchers perform - 1. developing new quantitative models like asset allocation or novel risk-adjusted performance metrics (to account for non-standard risk) using academic papers and 2. designing experiments to test these models.
+
+We will implement the logic of the following academic paper (Deep Learning Volatility, 2019, Horvath et al), build the proposed model, and productionalize everything using various Databricks services (see the Architecture at the end of this notebook).*
 
 ___
-<john.doe@databricks.com>
+<boris.banushev@databricks.com>
 
 ___
 
 
-IMAGE TO REFERENCE ARCHITECTURE
+<img src='https://bbb-databricks-demo-assets.s3.amazonaws.com/IV_arch.png' style="float: left" width="1250px" />
 
 ___
 
