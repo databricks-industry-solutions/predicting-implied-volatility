@@ -1,4 +1,8 @@
 # Databricks notebook source
+# MAGIC %pip install tensorflow==2.9.0 tf_quant_finance
+
+# COMMAND ----------
+
 import numpy as np
 import tensorflow as tf
 import tf_quant_finance as tff
