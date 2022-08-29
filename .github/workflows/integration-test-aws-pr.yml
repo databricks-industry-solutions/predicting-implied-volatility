@@ -1,8 +1,6 @@
-name: GCP integration test
+name: AWS integration test PR
 
 on:
- workflow_dispatch:
- push:
  pull_request:
 
 jobs:
@@ -15,15 +13,18 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: RUNME.py
-         databricks-host: ${{ secrets.DEPLOYMENT_TARGET_URL_GCP }}
-         databricks-token: ${{ secrets.DEPLOYMENT_TARGET_TOKEN_GCP }}
+         git-commit: ${{ github.sha }}
+         databricks-host: ${{ secrets.DEPLOYMENT_TARGET_URL_AWS }}
+         databricks-token: ${{ secrets.DEPLOYMENT_TARGET_TOKEN_AWS }}
          new-cluster-json: >
            {
              "num_workers": 1,
              "spark_version": "10.4.x-scala2.12",
-             "node_type_id": "n1-highmem-4"
+             "node_type_id": "i3.xlarge"
+             "aws_attributes": {"first_on_demand": 1,"availability": "ON_DEMAND"},
            }
          notebook-params-json: >
            {
             "run_job": "True"
            }
+           
