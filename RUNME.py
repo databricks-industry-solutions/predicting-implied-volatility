@@ -37,7 +37,7 @@ job_json = {
         "max_concurrent_runs": 1,
         "tags": {
             "usage": "solacc_automation",
-            "group": "FSI_solacc_automation"
+            "group": "FSI"
         },
         "tasks": [
             {
