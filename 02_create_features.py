@@ -1,8 +1,4 @@
 # Databricks notebook source
-# MAGIC %pip install tensorflow==2.10.0 tf_quant_finance
-
-# COMMAND ----------
-
 import numpy as np
 import tensorflow as tf
 import tf_quant_finance as tff
@@ -22,14 +18,9 @@ import pyspark.pandas as ps
 
 # MAGIC %md
 # MAGIC # Step 1. Model Setup
-# MAGIC Let's start by defining a *toy model* (generic Ito Process), which will be function of specific model parameters. 
-# MAGIC 
-# MAGIC This model can be used to price call options with specific *maturities* and *strikes* and therefore implied vols (using blackscholes one to one mapping between prie and implied vol).
-# MAGIC 
-# MAGIC Our aim find the values of model paramters such that implied vols calculated from *this* model matches with implied vols obtained from market (this process is called calibration).
 # MAGIC 
 # MAGIC ## 1.1. Model Definition
-# MAGIC Creating a toy model definition by following [lognormal](https://en.wikipedia.org/wiki/Log-normal_distributio) fx, [vasicek](https://en.wikipedia.org/wiki/Vasicek_model) ir & [local vol](https://en.wikipedia.org/wiki/Local_volatility) fx_vol.
+# MAGIC Implementing model definition using following [lognormal](https://en.wikipedia.org/wiki/Log-normal_distributio) fx, [vasicek](https://en.wikipedia.org/wiki/Vasicek_model) ir & [local vol](https://en.wikipedia.org/wiki/Local_volatility) volatilities.
 
 # COMMAND ----------
 
@@ -202,8 +193,6 @@ class BlackScholesWithVasicelAndLocalVol(GenericItoProcess):
 
 # COMMAND ----------
 
-# Let's instantiate a model with dummy model parameter values
-
 dtype=tf.float64
 jump_locations = np.array([0.05, 0.1, 0.15, 0.2, 0.3, 0.5, 0.7, 0.9, 1.1])
 jump_strikes = np.array([0.95, 0.99 , 1, 1.001])
@@ -244,21 +233,15 @@ model = BlackScholesWithVasicelAndLocalVol(
 
 # MAGIC %md
 # MAGIC ## 1.3. Model Calibration
-# MAGIC 
-# MAGIC To keep things simple let's just try to find the *lv_surface* that will map closest match to our target i.e implied_vol from market.
-# MAGIC 
-# MAGIC Moment of truth: Given the input dimenion of objective function is 50 ('local_vol_fx' surface of size 10x5 i.e 10 maturities by 5 strikes) and similarly output dimension is 50 as well, below cell execution will take forever. (if one really wants to test the execution, can reduce *option_maturities* to size of 1 array)
 
 # COMMAND ----------
 
 start_time_ = time.time()
 
-# These are all the maturities we want to reprice our call options
 option_maturities = [0.05, 0.1, 0.15, 0.2, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3]
 
 number_of_maturities = len(option_maturities)
 
-# These are all the strikes (on each of above 'option_maturities') of those call options
 option_strikes = np.array([0.95, 0.99 , 1, 1.001, 1.05])
 number_of_strikes = len(option_strikes)
 
@@ -310,7 +293,7 @@ roots = optimize.least_squares(objective_fn,
                       xtol=None,
                       gtol=None,)
 
-roots.x # this is best lv_surface that should be used in model, as it closely maps to implied_vols_from_model to 'implied_vol_target'
+roots.x
 
 
 end_time_ = time.time()
@@ -321,12 +304,10 @@ durr_ = end_time_ - start_time_
 # MAGIC %md
 # MAGIC # Step 2: Use Machine learning to reduce calibration time
 # MAGIC 
-# MAGIC Now we should try to reduce calibration time complexity using machine learning. The major bottleneck in above calibration is repeated calls to *model.implied_vol* function inside optimizer which is quite heavy due to Monte-Carlo Simulation.
+# MAGIC Reduce calibration time complexity using machine learning (the major bottleneck in above calibration is repeated calls to *model.implied_vol* function inside optimizer which is quite heavy due to Monte-Carlo Simulation).
 # MAGIC 
-# MAGIC If somehow we can learn that function (which is mapping local_vol model parameter to implied vol), then we can use that function underneath the optimizer as replacement and it would be many fold faster!
 # MAGIC 
 # MAGIC ## 2.1. Training Data Generation
-# MAGIC First step is generate training dataset
 
 # COMMAND ----------
 
@@ -422,10 +403,18 @@ fs = feature_store.FeatureStoreClient()
 
 # MAGIC %sql 
 # MAGIC 
+# MAGIC DROP SCHEMA IF EXISTS feature_store_implied_volatility CASCADE;
+# MAGIC DROP TABLE IF EXISTS feature_store_implied_volatility.features;
+# MAGIC DROP TABLE IF EXISTS feature_store_implied_volatility.labels;
+# MAGIC 
 # MAGIC -- Create the Feature Store database
 # MAGIC CREATE DATABASE IF NOT EXISTS feature_store_implied_volatility; 
 
 # COMMAND ----------
+
+fs.drop_table(
+  name='feature_store_implied_volatility.features'
+)
 
 fs.create_table(
     name="feature_store_implied_volatility.features",
@@ -434,6 +423,10 @@ fs.create_table(
     description = 'Features set for Implied Volatity')
 
 # COMMAND ----------
+
+fs.drop_table(
+  name='feature_store_implied_volatility.labels'
+)
 
 fs.create_table(
     name="feature_store_implied_volatility.labels",
@@ -508,5 +501,7 @@ features_ps.iloc[:, 1:].to_spark().createOrReplaceTempView('IVfeatures_view')
 # MAGIC %md
 # MAGIC 
 # MAGIC # Step 5: Train ML model for each of the labels 
-# MAGIC 
-# MAGIC See **Implied Volatility Prediction - 2. ML**
+
+# COMMAND ----------
+
+
