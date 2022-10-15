@@ -1,4 +1,8 @@
 # Databricks notebook source
+# MAGIC %pip install tensorflow==2.10.0 tf_quant_finance
+
+# COMMAND ----------
+
 import numpy as np
 import tensorflow as tf
 import tf_quant_finance as tff
@@ -412,9 +416,11 @@ fs = feature_store.FeatureStoreClient()
 
 # COMMAND ----------
 
-fs.drop_table(
-  name='feature_store_implied_volatility.features'
-)
+try:
+  fs.drop_table(name='feature_store_implied_volatility.features')
+except:
+  print("Feature store table does not exist.")
+
 
 fs.create_table(
     name="feature_store_implied_volatility.features",
@@ -424,10 +430,12 @@ fs.create_table(
 
 # COMMAND ----------
 
-fs.drop_table(
-  name='feature_store_implied_volatility.labels'
-)
+try:
+  fs.drop_table(name='feature_store_implied_volatility.labels')
+except:
+  print("Feature store table does not exist.")
 
+  
 fs.create_table(
     name="feature_store_implied_volatility.labels",
     primary_keys = ['index'],
