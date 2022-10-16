@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install tensorflow==2.10.0 tf_quant_finance
+# MAGIC %pip install tensorflow==2.10.0 tf_quant_finance databricks-feature-store
 
 # COMMAND ----------
 
