@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install tensorflow==2.10.0 tf_quant_finance
+# MAGIC %pip install tensorflow==2.11 tensorflow-probability tf_quant_finance
 
 # COMMAND ----------
 
@@ -509,4 +509,8 @@ features_ps.iloc[:, 1:].to_spark().createOrReplaceTempView('IVfeatures_view')
 # MAGIC 
 # MAGIC # Step 5: Train ML model for each of the labels 
 # MAGIC 
-# MAGIC See **Implied Volatility Prediction - 2. ML**
+# MAGIC See **the next notebook in this solution accelerators**
+
+# COMMAND ----------
+
+
