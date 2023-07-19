@@ -412,6 +412,8 @@ labels_ps = ps.DataFrame(labels, columns=schema_).reset_index()
 # MAGIC - **Integration** with model scoring and serving. When you use features from Databricks Feature Store to train a model, the model is packaged with feature metadata. When you use the model for batch scoring or online inference, it automatically retrieves features from Feature Store. The caller does not need to know about them or include logic to look up or join features to score new data. This makes model deployment and updates much easier.
 # MAGIC
 # MAGIC https://docs.databricks.com/applications/machine-learning/feature-store/index.html
+# MAGIC
+# MAGIC In the steps below, we create or replace the feature stores for our accelerator.
 
 # COMMAND ----------
 
@@ -427,6 +429,13 @@ fs = feature_store.FeatureStoreClient()
 
 # COMMAND ----------
 
+try:
+  fs.drop_table(
+    name="feature_store_implied_volatility.features" # throws value error if Feature Store table does not exist
+  )
+except ValueError: 
+  pass
+
 fs.create_table(
     name="feature_store_implied_volatility.features",
     primary_keys = ['index'],
@@ -434,6 +443,13 @@ fs.create_table(
     description = 'Features set for Implied Volatity')
 
 # COMMAND ----------
+
+try:
+  fs.drop_table(
+    name="feature_store_implied_volatility.labels" # throws value error if Feature Store table does not exist
+  )
+except ValueError: 
+  pass
 
 fs.create_table(
     name="feature_store_implied_volatility.labels",
